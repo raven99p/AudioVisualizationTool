@@ -1,0 +1,5 @@
+/client/.next
+/client/node_modules
+/client/package-lock.json
+/client/.eslintrc.json
+/server/__pycache__
