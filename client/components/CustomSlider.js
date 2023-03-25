@@ -37,7 +37,7 @@ export default function CustomSlider() {
   }, [range]);
 
   return (
-    <Box width={150}>
+    <Box width={250}>
       <Slider
         value={range}
         max={10000}
@@ -45,34 +45,36 @@ export default function CustomSlider() {
         valueLabelDisplay="auto"
         onChange={handleSliderChange}
       />
-      <TextField
-        type="number"
-        value={range[0]}
-        size="small"
-        onChange={handleInputChangeLow}
-        onBlur={handleBlur}
-        inputProps={{
-          step: 10,
-          min: 0,
-          max: 5000,
-          type: "number",
-          "aria-labelledby": "input-slider",
-        }}
-      />
-      <TextField
-        type="number"
-        value={range[1]}
-        size="small"
-        onChange={handleInputChangeHigh}
-        onBlur={handleBlur}
-        inputProps={{
-          step: 10,
-          min: 0,
-          max: 5000,
-          type: "number",
-          "aria-labelledby": "input-slider",
-        }}
-      />
+      <Box style={{ display: "flex", justifyContent: "center" }}>
+        <TextField
+          type="number"
+          value={range[0]}
+          size="small"
+          onChange={handleInputChangeLow}
+          onBlur={handleBlur}
+          inputProps={{
+            step: 10,
+            min: 0,
+            max: 5000,
+            type: "number",
+            "aria-labelledby": "input-slider",
+          }}
+        />
+        <TextField
+          type="number"
+          value={range[1]}
+          size="small"
+          onChange={handleInputChangeHigh}
+          onBlur={handleBlur}
+          inputProps={{
+            step: 10,
+            min: 0,
+            max: 5000,
+            type: "number",
+            "aria-labelledby": "input-slider",
+          }}
+        />
+      </Box>
     </Box>
   );
 }

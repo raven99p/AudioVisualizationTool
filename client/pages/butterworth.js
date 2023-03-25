@@ -146,7 +146,7 @@ export default function Melspectrogram() {
             ))}
           </Select>
         </Grid>
-        <Grid item xs={2}>
+        <Grid item xs={3}>
           <Item>
             {keys.map((k) => (
               <>
