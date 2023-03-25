@@ -170,10 +170,7 @@ export default function Melspectrogram() {
             <img src={img} alt="Empty Image" width={1000} />
             {
               <Typography variant="h6" component="h2">
-                {pythonError && (
-                  <>Error: {pythonError}</>
-                )}
-               
+                {pythonError && <>Error: {pythonError}</>}
               </Typography>
             }
           </Item>
