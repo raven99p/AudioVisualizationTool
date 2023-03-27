@@ -27,7 +27,6 @@ export default function Melspectrogram() {
   const [configuration, setConfiguration] = useState({
     audio_path: "",
     audio: "",
-    y: null,
     order: 2,
     cutoff_freq: 400,
     type: "bandpass",
@@ -39,6 +38,7 @@ export default function Melspectrogram() {
   const [pythonError, setPythonError] = useState(null);
 
   const fetchImage = async () => {
+    console.log(configuration);
     const res = await fetch("http://localhost:5000/butterworth", {
       method: "POST",
       headers: {
@@ -96,7 +96,7 @@ export default function Melspectrogram() {
     fetchAvailableAudio();
   }, [configuration["audio_path"]]);
 
-  function generateSpectrogram() {
+  function generateButterworthFilter() {
     fetchImage();
   }
 
@@ -151,8 +151,11 @@ export default function Melspectrogram() {
             {keys.map((k) => (
               <>
                 <div>{k}</div>
-                {(k == "cutoff_freq" && configuration["type"] == "bandpass") ? (
-                  <CustomSlider />
+                {k == "cutoff_freq" && configuration["type"] == "bandpass" ? (
+                  <CustomSlider
+                    configuration={configuration}
+                    setConfiguration={setConfiguration}
+                  />
                 ) : (
                   <TextField
                     onChange={(e) => changeKey(k, e)}
@@ -176,7 +179,7 @@ export default function Melspectrogram() {
         </Grid>
         <Grid item xs={6}>
           <Item>
-            <Button onClick={generateSpectrogram}>Generate</Button>
+            <Button onClick={generateButterworthFilter}>Generate</Button>
           </Item>
         </Grid>
       </Grid>

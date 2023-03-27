@@ -80,8 +80,9 @@ def butterworth():
             Wn=data["cutoff_freq"],
             btype=data["type"],
             output=data["output"],
-            fs=sr
+            fs=data["fs"] if data["fs"] is not None else sr
         )
+        print(sos)
         filtered_signal = signal.sosfilt(sos, y)
 
         fig, axs = plt.subplots(2, 1)

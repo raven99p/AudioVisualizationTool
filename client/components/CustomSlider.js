@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from "react";
 import { Box, Slider, TextField } from "@mui/material";
 
-export default function CustomSlider() {
+export default function CustomSlider({configuration, setConfiguration}) {
   const [range, setRange] = useState([100, 5000]);
 
   const handleSliderChange = (event, newValue) => {
@@ -33,7 +33,7 @@ export default function CustomSlider() {
   };
 
   useEffect(() => {
-    console.log(range);
+    setConfiguration({...configuration, cutoff_freq:range})
   }, [range]);
 
   return (
