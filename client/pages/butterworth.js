@@ -29,7 +29,7 @@ export default function Melspectrogram() {
     audio: "",
     order: 2,
     cutoff_freq: 400,
-    type: "bandpass",
+    type: "highpass",
     fs: null,
     output: "sos",
   });
