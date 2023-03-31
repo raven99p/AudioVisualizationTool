@@ -12,6 +12,7 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import CustomSlider from "../components/CustomSlider";
+import AudioPlayer from "../components/AudioPlayer";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -25,7 +26,7 @@ const keys = ["order", "cutoff_freq", "type", "fs", "output"];
 
 export default function Melspectrogram() {
   const [configuration, setConfiguration] = useState({
-    audio_path: "",
+    audio_path: "C:\\Users\\pauli\\work\\vis-gram\\server\\audio",
     audio: "",
     order: 2,
     cutoff_freq: 400,
@@ -176,6 +177,9 @@ export default function Melspectrogram() {
               </Typography>
             }
           </Item>
+        </Grid>
+        <Grid item xs={6}>
+          <AudioPlayer configuration={configuration}/>
         </Grid>
         <Grid item xs={6}>
           <Item>

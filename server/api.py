@@ -7,6 +7,8 @@ from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 import io
 import os
 from scipy import signal
+import wave
+import struct
 
 api = Blueprint('api', __name__)
 
@@ -82,7 +84,7 @@ def butterworth():
             output=data["output"],
             fs=data["fs"] if data["fs"] is not None else sr
         )
-        print(sos)
+
         filtered_signal = signal.sosfilt(sos, y)
 
         fig, axs = plt.subplots(2, 1)
@@ -98,6 +100,57 @@ def butterworth():
         output = io.BytesIO()
         FigureCanvas(fig).print_png(output)
         return Response(output.getvalue(), mimetype='image/png'), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 400
+
+
+@api.route("/butterworth_audio", methods=["POST"])
+def butterworth_audio():
+    """Pass selected audio through a butterworth filter and return the
+       filtered audio.
+
+    Returns:
+        array: Filtered Audio
+    """
+    print("BUTTERWORTH")
+    try:
+        data = request.get_json()
+        print(data)
+    except Exception as e:
+        print('Data not in json form')
+        return jsonify({"error": str(e)}), 400
+
+    try:
+
+        audio_directory = data["audio_path"]
+        audio = data["audio"]
+        path = os.path.join(audio_directory, audio)
+        y, sr = librosa.load(path)
+
+        sos = signal.butter(
+            N=data["order"],
+            Wn=data["cutoff_freq"],
+            btype=data["type"],
+            output=data["output"],
+            fs=data["fs"] if data["fs"] is not None else sr
+        )
+
+        filtered_signal = signal.sosfilt(sos, y)
+
+        audio_bytes = io.BytesIO()
+        with wave.open(audio_bytes, 'wb') as audio_file:
+            audio_file.setnchannels(1)
+            audio_file.setsampwidth(2)
+            audio_file.setframerate(sr)
+            for sample in filtered_signal:
+                sample_int = int(sample * 32767)
+                packed_sample = struct.pack('<h', sample_int)
+                audio_file.writeframes(packed_sample)
+
+        audio_bytes.seek(0)
+
+        return Response(audio_bytes, mimetype="audio/wav"), 200
 
     except Exception as e:
         return jsonify({"error": str(e)}), 400
