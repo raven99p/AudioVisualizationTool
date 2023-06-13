@@ -17,7 +17,7 @@ export default function AppFooter() {
       >
         <Container>
           <Typography style={{ color: "white" }}>
-            ©Audio Visualization Tool
+            ©CSS Helper
           </Typography>
         </Container>
       </Box>
